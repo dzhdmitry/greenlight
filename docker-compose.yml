@@ -1,0 +1,23 @@
+version: '3.8'
+
+volumes:
+  postgres_data:
+
+services:
+  postgres:
+    image: postgres:13-alpine
+    environment:
+      PGPORT: 5432
+      POSTGRES_DB: greenlight
+      POSTGRES_PASSWORD: pa55word
+      POSTGRES_USER: greenlight
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  mailcatcher:
+    image: rordi/docker-mailcatcher
+    ports:
+      - "1080:1080"
+      - "1025:1025"
