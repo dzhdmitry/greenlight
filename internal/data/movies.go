@@ -177,7 +177,7 @@ func (r MovieRepository) GetAll(title string, genres []string, filters Filters) 
 	defer rows.Close()
 
 	totalRecords := 0
-	movies := []*Movie{}
+	var movies []*Movie
 
 	for rows.Next() {
 		var movie Movie
@@ -204,7 +204,7 @@ func (r MovieRepository) GetAll(title string, genres []string, filters Filters) 
 		return nil, Metadata{}, err
 	}
 
-	metadata := calculateMatadata(totalRecords, filters.Page, filters.PageSize)
+	metadata := calculateMetadata(totalRecords, filters.Page, filters.PageSize)
 
 	return movies, metadata, nil
 }

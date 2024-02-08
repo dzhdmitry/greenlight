@@ -97,7 +97,7 @@ func (app *application) registerUserHandler(w http.ResponseWriter, r *http.Reque
 
 func (app *application) activateUserHandler(w http.ResponseWriter, r *http.Request) {
 	var input struct {
-		ToketPlaintext string `json:"token"`
+		TokenPlaintext string `json:"token"`
 	}
 
 	err := app.readJSON(w, r, &input)
@@ -110,13 +110,13 @@ func (app *application) activateUserHandler(w http.ResponseWriter, r *http.Reque
 
 	v := validator.New()
 
-	if data.ValidateTokenPlaintext(v, input.ToketPlaintext); !v.Valid() {
+	if data.ValidateTokenPlaintext(v, input.TokenPlaintext); !v.Valid() {
 		app.failedValidationResponse(w, r, v.Errors)
 
 		return
 	}
 
-	user, err := app.models.Users.GetForToken(data.ScopeActivation, input.ToketPlaintext)
+	user, err := app.models.Users.GetForToken(data.ScopeActivation, input.TokenPlaintext)
 
 	if err != nil {
 		switch {
